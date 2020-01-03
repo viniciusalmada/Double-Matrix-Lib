@@ -16,7 +16,6 @@ DoubleMatrix::DoubleMatrix(const int rows, const int cols)
 
 DoubleMatrix::DoubleMatrix(int& dimension): DoubleMatrix(dimension, dimension)
 {
-	delete[] mMatrixData;
 }
 
 DoubleMatrix::DoubleMatrix(int& rows, int& cols, double** data)
@@ -26,15 +25,11 @@ DoubleMatrix::DoubleMatrix(int& rows, int& cols, double** data)
 	mMatrixData = data;
 }
 
-DoubleMatrix::DoubleMatrix(const DoubleMatrix& dm)
-{
-	this->mMatrixData = dm.mMatrixData;
-	this->mRows = dm.mRows;
-	this->mColumns = dm.mColumns;
-}
-
 DoubleMatrix::~DoubleMatrix()
-= default;
+{
+	std::cout << "Bye, " << "!\n";
+	delete[] mMatrixData;
+}
 
 double& DoubleMatrix::get(int& m, int& n) const
 {
@@ -50,10 +45,10 @@ void DoubleMatrix::checkDimensions(DoubleMatrix& matrix) const
 {
 	try
 	{
-		if(this->mColumns != matrix.mRows)
+		if (this->mColumns != matrix.mRows)
 			throw std::runtime_error("Dimensions must agree");
 	}
-	catch(const std::exception& ex)
+	catch (const std::exception& ex)
 	{
 		std::cerr << ex.what() << std::endl;
 		std::abort();
@@ -64,9 +59,9 @@ DoubleMatrix DoubleMatrix::times(DoubleMatrix& matrix) const
 {
 	checkDimensions(matrix);
 	DoubleMatrix res = DoubleMatrix(this->mRows, matrix.mColumns);
-	res.forEachRowNColumn([&] (int& r, int& c, const double& value)
+	res.forEachRowNColumn([&](int& r, int& c, const double& value)
 	{
-		for(int k = 0; k < mColumns; ++k)
+		for (int k = 0; k < mColumns; ++k)
 		{
 			const double product = this->get(r, k) * matrix.get(k, c);
 			res.set(r, c, product + value);
@@ -77,17 +72,7 @@ DoubleMatrix DoubleMatrix::times(DoubleMatrix& matrix) const
 
 DoubleMatrix DoubleMatrix::times(double& scalar) const
 {
-	DoubleMatrix res = DoubleMatrix(*this);
-	forEachRowNColumn([&] (int& r, int& c, const double& value)
-	{
-		res.set(r, c, value * scalar);
-	});
-	return res;
-}
-
-DoubleMatrix DoubleMatrix::times(const double scalar) const
-{
-	DoubleMatrix res = DoubleMatrix(*this);
+	DoubleMatrix res = *this;
 	forEachRowNColumn([&](int& r, int& c, const double& value)
 	{
 		res.set(r, c, value * scalar);
@@ -97,7 +82,7 @@ DoubleMatrix DoubleMatrix::times(const double scalar) const
 
 DoubleMatrix DoubleMatrix::plus(DoubleMatrix& matrix) const
 {
-	DoubleMatrix res = DoubleMatrix(*this);
+	DoubleMatrix res = *this;
 	res.forEachRowNColumn([&](int& r, int& c, const double& value1)
 	{
 		double& value2 = matrix.get(r, c);
@@ -129,7 +114,7 @@ void DoubleMatrix::print() const
 	std::cout << std::endl;
 }
 
-void DoubleMatrix::forEachRowNColumn(const std::function<void(int&, int&, double&)>& block) const
+void DoubleMatrix::forEachRowNColumn(const matrixElem& block) const
 {
 	int r = 0;
 	int c = 0;

@@ -2,4 +2,5 @@ Debug/*
 DoubleMatrixLibrary/Debug/*
 *.sdf
 *.suo
-
+*.opensdf
+*.user
