@@ -1,12 +1,15 @@
 #ifndef DOUBLE_MATRIX_H
 #define DOUBLE_MATRIX_H
 #include <functional>
+#include <array>
+#include <vector>
 
 class DoubleMatrix final
 {
 private:
 	typedef std::function<void(int&, int&, double&)> MatrixElem;
 
+	std::vector<std::vector<double>> data;
 	double** mMatrixData;
 	int mRows;
 	int mColumns;
@@ -14,6 +17,7 @@ private:
 	void checkDimensions(const DoubleMatrix& matrix) const;
 
 public:
+
 	DoubleMatrix(int& rows, int& cols, double** data); // Copy constructor
 	DoubleMatrix(int rows, int cols);
 	DoubleMatrix(int& rows, int& cols);
