@@ -3,7 +3,7 @@
 
 int main()
 {
-	{
+	
 		DoubleMatrix a = DoubleMatrix(2, 2);
 		DoubleMatrix b = DoubleMatrix(2, 1);
 
@@ -20,10 +20,9 @@ int main()
 		std::cout << "\nMatrix B\n";
 		b.print();
 		std::cout << "\nA*B\n";
-		(a.times(b)).print();
-
+		DoubleMatrix c = a.times(b);
+		c.print();
 	
-	}
 	std::cin.get();
 	return 0;
 }

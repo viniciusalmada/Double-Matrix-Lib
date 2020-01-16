@@ -14,8 +14,17 @@ DoubleMatrix::DoubleMatrix(const int rows, const int cols)
 			mMatrixData[i][j] = 0.0;
 }
 
-DoubleMatrix::DoubleMatrix(int& dimension): DoubleMatrix(dimension, dimension)
+DoubleMatrix::DoubleMatrix(int& rows, int& cols)
 {
+	mRows = rows;
+	mColumns = cols;
+	mMatrixData = new double*[mRows];
+	for(int i = 0; i < mRows; i++)
+		mMatrixData[i] = new double[mColumns];
+
+	for(int i = 0; i < mRows; i++)
+		for(int j = 0; j < mColumns; j++)
+			mMatrixData[i][j] = 0.0;
 }
 
 DoubleMatrix::DoubleMatrix(int& rows, int& cols, double** data)
@@ -27,21 +36,19 @@ DoubleMatrix::DoubleMatrix(int& rows, int& cols, double** data)
 
 DoubleMatrix::~DoubleMatrix()
 {
-	std::cout << "Bye, " << "!\n";
-	delete[] mMatrixData;
 }
 
-double& DoubleMatrix::get(int& m, int& n) const
+inline double& DoubleMatrix::get(int& m, int& n) const
 {
 	return mMatrixData[m][n];
 }
 
-void DoubleMatrix::set(const int m, const int n, const double value) const
+inline void DoubleMatrix::set(const int m, const int n, const double value) const
 {
 	mMatrixData[m][n] = value;
 }
 
-void DoubleMatrix::checkDimensions(DoubleMatrix& matrix) const
+void DoubleMatrix::checkDimensions(const DoubleMatrix& matrix) const
 {
 	try
 	{
@@ -55,19 +62,36 @@ void DoubleMatrix::checkDimensions(DoubleMatrix& matrix) const
 	}
 }
 
-DoubleMatrix DoubleMatrix::times(DoubleMatrix& matrix) const
+/*std::shared_ptr<DoubleMatrix> DoubleMatrix::times(const DoubleMatrix& matrix) const
 {
 	checkDimensions(matrix);
-	DoubleMatrix res = DoubleMatrix(this->mRows, matrix.mColumns);
-	res.forEachRowNColumn([&](int& r, int& c, const double& value)
+	DoubleMatrix* res = new DoubleMatrix(this->mRows, matrix.mColumns);
+	res->forEachRowNColumn([&](int& r, int& c, const double&)
 	{
-		for (int k = 0; k < mColumns; ++k)
+		for (int k = 0; k < res->mColumns; ++k)
 		{
 			const double product = this->get(r, k) * matrix.get(k, c);
-			res.set(r, c, product + value);
+			const double& oldValue = res->get(r, c);
+			res->set(r, c, product + oldValue);
 		}
 	});
-	return res;
+	return std::shared_ptr<DoubleMatrix>(res);
+}*/
+
+DoubleMatrix DoubleMatrix::times(const DoubleMatrix& matrix) const
+{
+	checkDimensions(matrix);
+	DoubleMatrix res(this->mRows, matrix.mColumns);
+	res.forEachRowNColumn([&](int& r, int& c, const double&)
+	{
+		for (int k = 0; k < res.mColumns; ++k)
+		{
+			const double product = this->get(r, k) * matrix.get(k, c);
+			const double& oldValue = res.get(r, c);
+			res.set(r, c, product + oldValue);
+		}
+	});
+	return (res);
 }
 
 DoubleMatrix DoubleMatrix::times(double& scalar) const
@@ -101,18 +125,18 @@ DoubleMatrix DoubleMatrix::transpose() const
 	return transpose;
 }
 
-void DoubleMatrix::print() const
-{
-	for (int i = 0; i < mRows; ++i)
+	void DoubleMatrix::print() const
 	{
-		for (int j = 0; j < mColumns; ++j)
+		for (int i = 0; i < mRows; ++i)
 		{
-			std::cout << mMatrixData[i][j] << "\t";
+			for (int j = 0; j < mColumns; ++j)
+			{
+				std::cout << this->get(i, j) << "\t";
+			}
+			std::cout << std::endl;
 		}
 		std::cout << std::endl;
 	}
-	std::cout << std::endl;
-}
 
 void DoubleMatrix::forEachRowNColumn(const matrixElem& block) const
 {
