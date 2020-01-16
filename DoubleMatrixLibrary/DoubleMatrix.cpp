@@ -43,7 +43,7 @@ inline double& DoubleMatrix::get(int& m, int& n) const
 	return mMatrixData[m][n];
 }
 
-inline void DoubleMatrix::set(const int m, const int n, const double value) const
+inline void DoubleMatrix::set(const int m, const int n, const double value)
 {
 	mMatrixData[m][n] = value;
 }
@@ -138,7 +138,7 @@ DoubleMatrix DoubleMatrix::transpose() const
 		std::cout << std::endl;
 	}
 
-void DoubleMatrix::forEachRowNColumn(const matrixElem& block) const
+void DoubleMatrix::forEachRowNColumn(const MatrixElem& block) const
 {
 	int r = 0;
 	int c = 0;
