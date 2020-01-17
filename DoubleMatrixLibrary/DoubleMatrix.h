@@ -1,36 +1,44 @@
 #ifndef DOUBLE_MATRIX_H
 #define DOUBLE_MATRIX_H
 #include <functional>
-#include <array>
 #include <vector>
+
+using std::vector;
+using std::function;
 
 class DoubleMatrix final
 {
 private:
-	typedef std::function<void(int&, int&, double&)> MatrixElem;
-
-	std::vector<std::vector<double>> data;
-	double** mMatrixData;
-	int mRows;
-	int mColumns;
-
-	void checkDimensions(const DoubleMatrix& matrix) const;
-
+	vector<double> mData;
+	int mRows{};
+	int mColumns{};
+	
 public:
-
-	DoubleMatrix(int& rows, int& cols, double** data); // Copy constructor
+	typedef const double& DoubleC;
+	typedef function<void(int&, int&, DoubleC)> MatrixElem;
+	typedef function<void(int&, DoubleC)> Elem;
+	
+	DoubleMatrix();
 	DoubleMatrix(int rows, int cols);
-	DoubleMatrix(int& rows, int& cols);
-	~DoubleMatrix();
+	DoubleMatrix(int dimension);
 
-	inline double& get(int& m, int& n) const;
-	inline void set(int m, int n, double value);
-	DoubleMatrix times(const DoubleMatrix& matrix) const;
-	DoubleMatrix times(double& scalar) const;
-	DoubleMatrix plus(DoubleMatrix& matrix) const;
+	int nRows() const { return mRows; }
+	int nColumns() const { return mColumns; }
+
+	inline DoubleC get(int r, int c) const;
+	inline void set(int r, int c, double value);
+	DoubleMatrix operator*(const DoubleMatrix& matrix) const;
+	DoubleMatrix operator*(double scalar) const;
+	DoubleMatrix operator*(int scalar) const;
+	DoubleMatrix operator+(DoubleMatrix& matrix) const;
+	DoubleMatrix operator-(DoubleMatrix& matrix) const;
+	DoubleMatrix operator-() const;
 	DoubleMatrix transpose() const;
+	void oneOnZeroDiagonal();
+
 	void print() const;
-	void forEachRowNColumn(const MatrixElem& block) const;
+	inline void forEachRowNColumn(const MatrixElem& block) const;
+	inline void forEachElement(const Elem& block) const;
 };
 
 #endif
