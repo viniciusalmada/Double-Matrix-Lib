@@ -64,11 +64,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="DoubleMatrix.h" />
+    <ClInclude Include="LUDecomposition.h" />
+    <ClInclude Include="MatrixLib.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DoubleMatrix.cpp" />
+    <ClCompile Include="LUDecomposition.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MatrixLib.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
