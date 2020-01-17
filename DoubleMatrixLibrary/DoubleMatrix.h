@@ -39,6 +39,8 @@ public:
 	void print() const;
 	inline void forEachRowNColumn(const MatrixElem& block) const;
 	inline void forEachElement(const Elem& block) const;
+
+	static DoubleMatrix rand(int rows, int cols);
 };
 
 #endif

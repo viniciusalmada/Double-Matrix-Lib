@@ -1,5 +1,6 @@
 #include <iostream>
 #include "DoubleMatrix.h"
+#include "RandDouble.h"
 
 DoubleMatrix::DoubleMatrix()
 = default;
@@ -151,4 +152,15 @@ void DoubleMatrix::forEachElement(const Elem& block) const
 		block(i, mData[i]);
 		i++;
 	}
+}
+
+DoubleMatrix DoubleMatrix::rand(int rows, int cols)
+{
+	DoubleMatrix dm(rows, cols);
+	RandDouble rd(-1, 1);
+	dm.forEachElement([&](int& i, DoubleC)
+	{
+		dm.mData[i] = rd() * 10.0;
+	});
+	return dm;
 }
