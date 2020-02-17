@@ -25,8 +25,8 @@ public:
 	int nRows() const { return mRows; }
 	int nColumns() const { return mColumns; }
 
-	inline DoubleC get(int r, int c) const;
-	inline void set(int r, int c, double value);
+	DoubleC get(int r, int c) const;
+	void set(int r, int c, double value);
 	DoubleMatrix operator*(const DoubleMatrix& matrix) const;
 	DoubleMatrix operator*(double scalar) const;
 	DoubleMatrix operator*(int scalar) const;
@@ -37,7 +37,7 @@ public:
 	void oneOnZeroDiagonal();
 
 	void print() const;
-	inline void forEachRowNColumn(const MatrixElem& block) const;
+	void forEachRowNColumn(const MatrixElem& block) const;
 	inline void forEachElement(const Elem& block) const;
 
 	static DoubleMatrix rand(int rows, int cols);
