@@ -3,5 +3,5 @@ DoubleMatrixLibrary/Debug/*
 *.sdf
 *.suo
 *.opensdf
-*.user
 main.cpp
+.vs/
