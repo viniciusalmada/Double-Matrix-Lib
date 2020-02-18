@@ -29,7 +29,7 @@ void DoubleMatrix::set(int r, int c, double value)
 }
 
 DoubleMatrix
-DoubleMatrix::operator*(const DoubleMatrix& matrix) const
+DoubleMatrix::times(const DoubleMatrix& matrix) const
 {
 	DoubleMatrix res(mRows, matrix.mColumns);
 	res.forEachRowNColumn([&](int& r, int& c, DoubleC)
@@ -46,7 +46,7 @@ DoubleMatrix::operator*(const DoubleMatrix& matrix) const
 	return res;
 }
 
-DoubleMatrix DoubleMatrix::operator*(double scalar) const
+DoubleMatrix DoubleMatrix::times(double scalar) const
 {
 	DoubleMatrix res(*this);
 	res.forEachElement([&](int& i, DoubleC value)
@@ -56,7 +56,7 @@ DoubleMatrix DoubleMatrix::operator*(double scalar) const
 	return res;
 }
 
-DoubleMatrix DoubleMatrix::operator*(int scalar) const
+DoubleMatrix DoubleMatrix::times(int scalar) const
 {
 	DoubleMatrix res(*this);
 	res.forEachElement([&](int& i, DoubleC value)
@@ -66,7 +66,7 @@ DoubleMatrix DoubleMatrix::operator*(int scalar) const
 	return res;
 }
 
-DoubleMatrix DoubleMatrix::operator+(DoubleMatrix& matrix) const
+DoubleMatrix DoubleMatrix::plus(DoubleMatrix& matrix) const
 {
 	DoubleMatrix res(*this);
 	res.forEachElement([&](int& i, DoubleC)
@@ -76,7 +76,7 @@ DoubleMatrix DoubleMatrix::operator+(DoubleMatrix& matrix) const
 	return res;
 }
 
-DoubleMatrix DoubleMatrix::operator-(DoubleMatrix& matrix) const
+DoubleMatrix DoubleMatrix::minus(DoubleMatrix& matrix) const
 {
 	DoubleMatrix res(*this);
 	res.forEachElement([&](int& i, DoubleC)
@@ -86,7 +86,7 @@ DoubleMatrix DoubleMatrix::operator-(DoubleMatrix& matrix) const
 	return res;
 }
 
-DoubleMatrix DoubleMatrix::operator-() const
+DoubleMatrix DoubleMatrix::unaryMinus() const
 {
 	DoubleMatrix res(*this);
 	res.forEachElement([&](int& i, DoubleC)

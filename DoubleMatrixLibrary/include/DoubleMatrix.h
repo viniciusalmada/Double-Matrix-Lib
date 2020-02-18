@@ -27,12 +27,12 @@ public:
 
 	DoubleC get(int r, int c) const;
 	void set(int r, int c, double value);
-	DoubleMatrix operator*(const DoubleMatrix& matrix) const;
-	DoubleMatrix operator*(double scalar) const;
-	DoubleMatrix operator*(int scalar) const;
-	DoubleMatrix operator+(DoubleMatrix& matrix) const;
-	DoubleMatrix operator-(DoubleMatrix& matrix) const;
-	DoubleMatrix operator-() const;
+	DoubleMatrix times(const DoubleMatrix& matrix) const;
+	DoubleMatrix times(double scalar) const;
+	DoubleMatrix times(int scalar) const;
+	DoubleMatrix plus(DoubleMatrix& matrix) const;
+	DoubleMatrix minus(DoubleMatrix& matrix) const;
+	DoubleMatrix unaryMinus() const;
 	DoubleMatrix transpose() const;
 	void oneOnZeroDiagonal();
 
